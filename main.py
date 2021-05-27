@@ -10,8 +10,9 @@ from vgg import load_vgg_model, CONFIG, STYLE_LAYERS
 from utils import generate_noise_image, reshape_and_normalize_image, save_image
 
 IMAGE_PAIRS = [
-    ('kyiv.jpg', 'vincent_van_gogh.jpg'),
+    ('my_cat.jpg', 'vincent_van_gogh.jpg'),
 ]
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='NST using tensorflow [configuration]')
@@ -22,6 +23,7 @@ def parse_arguments():
     parser.add_argument('--log-level', type=str, default='info', dest='log_level',
                         help='Logging level')
     return parser.parse_args()
+
 
 def compute_content_cost(a_C, a_G):
         _, n_H, n_W, n_C = a_G.get_shape().as_list()
@@ -34,8 +36,10 @@ def compute_content_cost(a_C, a_G):
 
         return J_content
 
+
 def compute_gram_matrix(A):
     return tf.matmul(A, A, transpose_b=True)
+
 
 def compute_layer_style_cost(a_S, a_G):
     _, n_H, n_W, n_C = a_G.get_shape().as_list()
@@ -50,6 +54,7 @@ def compute_layer_style_cost(a_S, a_G):
     J_style_layer *= (1 / (4 * np.square(n_H * n_W) * np.square(n_C)))
     
     return J_style_layer
+
 
 def compute_style_cost(sess, model, STYLE_LAYERS):
     J_style = 0
@@ -67,11 +72,14 @@ def compute_style_cost(sess, model, STYLE_LAYERS):
 
     return J_style
 
+
 def total_cost(J_content, J_style, alpha = 10, beta = 40):
     return alpha * J_content + beta * J_style
 
+
 def read_image(DIR, image_name, image_shape=None):
     return reshape_and_normalize_image(scipy.misc.imread(DIR + image_name), image_shape=image_shape)
+
 
 def log_results(iteration, costs):
     logging.info("Iteration {}\n".format(iteration))
@@ -79,8 +87,8 @@ def log_results(iteration, costs):
     logging.info("Content cost: {:.4f}".format(costs[1]))
     logging.info("Style cost: {:.4f}\n".format(costs[2]))
 
-class NeuralStyleTransfer():
 
+class NeuralStyleTransfer():
     def __init__(self, content_image_name=None, style_image_name=None, iterations=1500, save_every=50):
         if content_image_name is None or style_image_name is None:
             raise UserWarning('Image names should not be empty!')
@@ -168,8 +176,8 @@ class NeuralStyleTransfer():
                         self.content_image_name, self.style_image_name, iteration)
         save_image(image_path, generate_image)
 
+
 def main():
-    
     # Create auxillary output directory if it does'nt exist
     if not os.path.isdir(CONFIG.OUTPUT_AUX_DIR):
         os.mkdir(CONFIG.OUTPUT_AUX_DIR)
@@ -184,6 +192,7 @@ def main():
         nst_model = NeuralStyleTransfer(content_image, style_image, 
                     iterations=args.iterations, save_every=args.save_every)
         _ = nst_model.generate_image()
+
 
 if __name__ == '__main__':
     try:
