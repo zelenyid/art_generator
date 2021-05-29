@@ -9,10 +9,6 @@ import tensorflow as tf
 from vgg import load_vgg_model, CONFIG, STYLE_LAYERS
 from utils import generate_noise_image, reshape_and_normalize_image, save_image
 
-IMAGE_PAIRS = [
-    ('my_cat.jpg', 'vincent_van_gogh.jpg'),
-]
-
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='NST using tensorflow [configuration]')
@@ -177,20 +173,21 @@ class NeuralStyleTransfer():
         save_image(image_path, generate_image)
 
 
-def main():
+def main(image_pairs):
     # Create auxillary output directory if it does'nt exist
     if not os.path.isdir(CONFIG.OUTPUT_AUX_DIR):
         os.mkdir(CONFIG.OUTPUT_AUX_DIR)
 
-    args = parse_arguments()
+    # args = parse_arguments()
 
-    LOG_FORMAT = '%(levelname)s %(message)s'
-    logging.basicConfig(format=LOG_FORMAT, level=getattr(logging, args.log_level.upper()))
+    # LOG_FORMAT = '%(levelname)s %(message)s'
+    # logging.basicConfig(format=LOG_FORMAT, level=getattr(logging, args.log_level.upper()))
 
-    for content_image, style_image in IMAGE_PAIRS:
+    for content_image, style_image in image_pairs:
         print('For content: {} and style: {}\n'.format(content_image, style_image))
-        nst_model = NeuralStyleTransfer(content_image, style_image, 
-                    iterations=args.iterations, save_every=args.save_every)
+        nst_model = NeuralStyleTransfer(content_image, style_image,
+                                        iterations=500, save_every=50)
+                    # iterations=args.iterations, save_every=args.save_every)
         _ = nst_model.generate_image()
 
 

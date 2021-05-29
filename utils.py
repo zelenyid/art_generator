@@ -3,6 +3,7 @@ import numpy as np
 
 from vgg import CONFIG
 
+
 def generate_noise_image(content_image, noise_ratio = CONFIG.NOISE_RATIO):
     """
     Generates a noisy image by adding random noise to the content_image

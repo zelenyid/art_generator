@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-12 col-xs-12 pt-5">
+                <h1>Generated Art</h1>
+                <img src="{{ art }}" alt="generated art"/>
+
+                <a href="/">
+                    <button type="button" class="btn btn-primary m-2">Back</button>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

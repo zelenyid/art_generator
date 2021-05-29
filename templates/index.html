@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-sm-12 col-xs-12 pt-5">
+                <form method="POST" enctype="multipart/form-data" action="">
+                    <div>
+                        <label class="form-label" for="customFile-1">Choice a file to transfer to style:</label>
+                        <input type="file" name="file-img" accept=".jpg,.jpeg,.png" class="form-control" onchange="readURL(this, '#blah');"  id="customFile-1" />
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 col-sm-12 col-xs-12 mt-2">
+                            <img class="place" id="blah" src="http://placehold.it/180" alt="your image"/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="customFile-2">Choice a style:</label>
+                        <input type="file" name="file-style" accept=".jpg,.jpeg,.png" class="form-control" onchange="readURL(this, '#blah-2');"  id="customFile-2" />
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-6 col-sm-12 col-xs-12 mt-2">
+                            <img class="place" id="blah-2" src="http://placehold.it/180" alt="your image"/>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -108,3 +108,4 @@ model/
 data/out/
 data/images/content
 data/images/style
+static/out
